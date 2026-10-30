@@ -4,8 +4,8 @@
 // Renvoie le total des kilos récoltés sur une parcelle. Aucune récolte : 0.
 export function totalRecolte(recoltes, idParcelle) {
    return recoltes
-   .filter((recoltes) => recoltes.parcelles === idParcelle) // j'ai utilisé la fonction flèché car elle me semblais la plus simple.
-   .reduce((total, recoltes) => total + recoltes.kg ,0)
+   .filter((recolte) => recolte.parcelle === idParcelle) // j'ai utilisé la fonction flèché car elle me semblais la plus simple.
+   .reduce((total, recolte) => total + recolte.kg ,0)
 
 }
 
@@ -14,7 +14,7 @@ export function totalRecolte(recoltes, idParcelle) {
 // Une surface nulle ou négative est une erreur : on lance une RangeError.
 export function rendement(kg, surface) {
   if (surface <= 0 ){
-    throw new Error('la surface doit être supérieur à 0');
+    throw new RangeError('la surface doit être supérieur à 0');
   }
   return Math.round( kg /surface);
 }
@@ -28,17 +28,20 @@ export function revenu(kg, prixKg) {
 // Chaque ligne : { id, producteur, culture, kg, rendement, revenu }
 export function bilanRecoltes(parcelles, recoltes, cultures) {
   return parcelles.map((parcelle) => {
-    const culture = cultures.find((c) => c.code === parcelle.surface);
+    const culture = cultures.find((c) => c.code === parcelle.culture);
+    if (culture === undefined){
+      throw new Error(`Culture inconnue : ${parcelle.culture} (parcelle ${parcelle.id})`)
+    }
     const kg = totalRecolte(recoltes , parcelle.id);
-    const rd= rendement(kg, parcelle.superficie);
-    const rv=revenu(kg , culture.prixKg);
+    //const rd= rendement(kg, parcelle.surface);
+    //const rv=revenu(kg , culture.prixKg);
     return{
       id:parcelle.id,
-      producteur:parcelles.producteur,
+      producteur: parcelle.producteur,
       culture: parcelle.culture,
       kg: kg,
-      rendement: rd,
-      revenu:rv,
+      rendement: rendement(kg, parcelle.surface),
+      revenu: revenu(kg , culture.prixKg),
       
 
     }
@@ -48,7 +51,5 @@ export function bilanRecoltes(parcelles, recoltes, cultures) {
 // Renvoie une COPIE du bilan, triée du plus grand revenu au plus petit.
 // Le tableau reçu ne doit pas changer d'ordre.
 export function classerParRevenu(bilan) {
-  throw new Error(
-    "TODO Membre 3 : coder classerParRevenu dans src/recoltes.js",
-  );
+  return [...bilan].sort((a,b) =>b.revenu - a.revenu);
 }
