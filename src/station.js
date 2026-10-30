@@ -28,7 +28,13 @@ export async function interrogerSansPlanter(capteur) {
 
 // Interroge les capteurs L'UN APRÈS L'AUTRE (on attend chaque réponse).
 export async function releverUnParUn(capteurs) {
-  throw new Error("TODO Bonus : coder releverUnParUn dans src/station.js");
+  const listeReponses = new Array();
+  for await (const capteur of capteurs) {
+  const reponseCapteur = await interrogerSansPlanter(capteur);
+  listeReponses.push(reponseCapteur)
+  }
+  return listeReponses;
+
 }
 
 // Interroge tous les capteurs EN MÊME TEMPS. Les résultats gardent l'ordre des capteurs.
