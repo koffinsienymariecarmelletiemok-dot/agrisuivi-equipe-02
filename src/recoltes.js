@@ -13,7 +13,10 @@ export function totalRecolte(recoltes, idParcelle) {
 // Renvoie le rendement en kg par hectare, arrondi à l'entier le plus proche.
 // Une surface nulle ou négative est une erreur : on lance une RangeError.
 export function rendement(kg, surface) {
- 
+  if (surface <= 0 ){
+    throw new Error('la surface doit être supérieur à 0');
+  }
+  return Math.round( kg /surface);
 }
 
 // Renvoie le revenu estimé en FCFA.
