@@ -3,13 +3,17 @@
 
 // Renvoie le total des kilos récoltés sur une parcelle. Aucune récolte : 0.
 export function totalRecolte(recoltes, idParcelle) {
-  throw new Error("TODO Membre 3 : coder totalRecolte dans src/recoltes.js");
+   return recoltes
+   .filter((recoltes) => recoltes.parcelles === idParcelle) // j'ai utilisé la fonction flèché car elle me semblais la plus simple.
+   .reduce((total, recoltes) => total + recoltes.kg ,0)
+
 }
+
 
 // Renvoie le rendement en kg par hectare, arrondi à l'entier le plus proche.
 // Une surface nulle ou négative est une erreur : on lance une RangeError.
 export function rendement(kg, surface) {
-  throw new Error("TODO Membre 3 : coder rendement dans src/recoltes.js");
+ 
 }
 
 // Renvoie le revenu estimé en FCFA.
