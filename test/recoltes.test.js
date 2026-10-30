@@ -1,6 +1,6 @@
-import test from 'node:test';
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { bilanRecoltes, classerParRevenu, rendement, revenu, totalRecolte } from '../src/recoltes.js';
+import { bilanRecoltes, classerParRevenu, rendement, revenu, totalRecolte, classerParRendement } from '../src/recoltes.js';
 
 const cultures = [
   { code: 'cacao', nom: 'Cacao', prixKg: 2000, humiditeMin: 40, humiditeMax: 70 },
@@ -53,4 +53,23 @@ test('classerParRevenu ne modifie pas le tableau reçu', () => {
   const bilan = [{ id: 'A1', revenu: 100 }, { id: 'A2', revenu: 900 }];
   classerParRevenu(bilan);
   assert.deepEqual(bilan.map((ligne) => ligne.id), ['A1', 'A2']);
+});
+
+// Test demandé : surface négative
+test('rendement lance RangeError pour surface négative', () => {
+  assert.throws(() => rendement(100, -2), RangeError);
+  assert.throws(() => rendement(100, 0), RangeError);
+});
+
+// Bonus : classerParRendement
+test('classerParRendement trie par rendement décroissant sans muter', () => {
+  const bilan = [
+    { id: 'P01', rendement: 1200, revenu: 1000 },
+    { id: 'P02', rendement: 2500, revenu: 500 },
+    { id: 'P03', rendement: 800, revenu: 2000 },
+  ];
+  const copie = [...bilan];
+  const trie = classerParRendement(bilan);
+  assert.deepStrictEqual(trie.map(b => b.id), ['P02', 'P01', 'P03']);
+  assert.deepStrictEqual(bilan, copie);
 });

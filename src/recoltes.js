@@ -53,3 +53,7 @@ export function bilanRecoltes(parcelles, recoltes, cultures) {
 export function classerParRevenu(bilan) {
   return [...bilan].sort((a,b) =>b.revenu - a.revenu);
 }
+
+export function classerParRendement(bilan){
+  return[...bilan].sort((a,b) => b.rendement - a.rendement)
+}
