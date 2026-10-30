@@ -29,7 +29,8 @@ export async function interrogerSansPlanter(capteur) {
 // Interroge les capteurs L'UN APRÈS L'AUTRE (on attend chaque réponse).
 export async function releverUnParUn(capteurs) {
   const listeReponses = new Array();
-  for await (const capteur of capteurs) {
+ 
+ for await (const capteur of capteurs) {
   const reponseCapteur = await interrogerSansPlanter(capteur);
   listeReponses.push(reponseCapteur)
   }
