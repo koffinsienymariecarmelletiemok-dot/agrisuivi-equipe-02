@@ -31,7 +31,19 @@ export function surfaceTotale(parcelles) {
 // Renvoie un objet : pour chaque culture, le nombre de parcelles et leur surface.
 // Exemple : { cacao: { nombre: 2, surface: 5 }, riz: { nombre: 1, surface: 1 } }
 export function resumeParCulture(parcelles) {
-  throw new Error(
-    "TODO Membre 1 : coder resumeParCulture dans src/parcelles.js",
-  );
+
+  // enregistrement des différentes cultures avec leurs id
+  const idParcelles = new Array();
+  for (let i = 0 ; i < parcelles.length; i++) {
+    idParcelles.push(parcelles[i].culture);
+  };
+
+  const cultures = new Object();  // initialisation d'un objet vide appellé culture
+  for (let i = 0; i < idParcelles.length; i++) {
+    const parcelleCulture = parcellesParCulture(parcelles, idParcelles[i]);
+    cultures[idParcelles[i]] = {nombre : parcelleCulture.length,                // compter les parcelles portant une culture spécifique
+                                surface : surfaceTotale(parcelleCulture)}         // calcul de la surface totale pour la culture concernée
+  };
+
+  return cultures
 }
