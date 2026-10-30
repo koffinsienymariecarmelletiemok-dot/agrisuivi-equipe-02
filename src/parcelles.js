@@ -26,7 +26,6 @@ export function surfaceTotale(parcelles) {
     surfaces.push(parcelles[i].surface);
   };
   return surfaces.reduce((accumulateur, valeurCourante) => accumulateur + valeurCourante, 0);
-
 }
 
 // Renvoie un objet : pour chaque culture, le nombre de parcelles et leur surface.
