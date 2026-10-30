@@ -4,11 +4,9 @@
 // Renvoie une promesse qui se résout après capteur.delai millisecondes avec
 // { parcelle, humidite }, ou qui est rejetée si le capteur n'est pas en ligne.
 export function interrogerCapteur(capteur) {
-<<<<<<< HEAD
 
 
 
-=======
    return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (capteur.enLigne) {
@@ -18,7 +16,6 @@ export function interrogerCapteur(capteur) {
       }
     }, capteur.delai);
   });
->>>>>>> 23781af528d13497740cdbdc8365b602cd8ed025
 }
 
 
@@ -34,7 +31,13 @@ export async function interrogerSansPlanter(capteur) {
 
 // Interroge les capteurs L'UN APRÈS L'AUTRE (on attend chaque réponse).
 export async function releverUnParUn(capteurs) {
-  throw new Error("TODO Bonus : coder releverUnParUn dans src/station.js");
+  const listeReponses = new Array();
+  for await (const capteur of capteurs) {
+    const reponseCapteur = interrogerSansPlanter(capteur)
+    listeReponses.push(reponseCapteur)
+  }
+  return listeReponses;
+
 }
 
 // Interroge tous les capteurs EN MÊME TEMPS. Les résultats gardent l'ordre des capteurs.
