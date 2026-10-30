@@ -19,7 +19,13 @@ export function parcellesParCulture(parcelles, culture) {
 
 // Renvoie la somme des surfaces (en hectares). Liste vide : 0.
 export function surfaceTotale(parcelles) {
-  throw new Error("TODO Membre 1 : coder surfaceTotale dans src/parcelles.js");
+
+    const surfaces = new Array()
+
+  for (let i = 0; i < parcelles.length; i++) {
+    surfaces.push(parcelles[i].surface);
+  };
+  return surfaces.reduce((accumulateur, valeurCourante) => accumulateur + valeurCourante, 0);
 }
 
 // Renvoie un objet : pour chaque culture, le nombre de parcelles et leur surface.
