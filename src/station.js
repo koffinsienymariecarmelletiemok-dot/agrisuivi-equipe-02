@@ -4,21 +4,15 @@
 // Renvoie une promesse qui se résout après capteur.delai millisecondes avec
 // { parcelle, humidite }, ou qui est rejetée si le capteur n'est pas en ligne.
 export function interrogerCapteur(capteur) {
-<<<<<<< HEAD
-
-
-
-=======
    return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (capteur.enLigne) {
         resolve({ parcelle: capteur.parcelle, humidite: capteur.humidite });
       } else {
-        reject(new Error(`${capteur.id} hors ligne`));
+        reject(new Error(`Capteur ${capteur.id} hors ligne`));
       }
     }, capteur.delai);
   });
->>>>>>> 23781af528d13497740cdbdc8365b602cd8ed025
 }
 
 
